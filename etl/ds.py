@@ -1,5 +1,4 @@
 from .logs import die
-#import requests
 import pandas as pd
 import geopandas as gpd
 import datetime
@@ -8,12 +7,10 @@ def read_json(url: str) -> pd.DataFrame:
     """Reads a JSON into a Pandas dataframe
 
     Args:
-        fname (str): the name of the CSV file
-        indicators (pd.DataFrame): the indicators we want
-        sep (str, optional): the character separator. Defaults to ",".
-
+        fname (str): the url path
+        
     Returns:
-        pd.DataFrame: [description]
+        pd.DataFrame: [Dataframe from the source data]
     """
     try:
         df = pd.read_json(url, convert_dates = False)
@@ -27,8 +24,6 @@ def read_geojson(fname: str) -> gpd.GeoDataFrame:
 
      Args:
          fname (str): the name of the Geojson file
-         indicators (gpd.GeoDataFrame): the indicators we want
-         sep (str, optional): the character separator. Defaults to ",".
 
      Returns:
          gpd.GeoDataFrame: [description]

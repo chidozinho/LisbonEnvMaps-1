@@ -31,7 +31,7 @@ def extraction(config: dict) -> pd.DataFrame:
     e.info("EXTRACTION: COMPLETED")
     t1 = time.time()
     e.info("EXTRACTION TIME: " + str(t1-t0) + " seconds")
-#     #sys.exit(0)
+
     return df
 
    
@@ -71,11 +71,6 @@ def transformation(config: dict, df: pd.DataFrame) -> pd.DataFrame:
         del i['id']
         i = i.set_index('id_sensor')
     
-    print(temp_df.head())
- 
-    print(noise_df.head())
-   
-    print(hum_df.head())
     
     # importing stations file from static data
     stations = config["fname_stations"]
@@ -85,8 +80,6 @@ def transformation(config: dict, df: pd.DataFrame) -> pd.DataFrame:
     stations_df = pd.DataFrame(gdf)
     columns_to_drop1 = ['address', 'geometry']
     stations_df = stations_df.drop(columns=columns_to_drop1)
-
-    print(stations_df.head())
 
 
     stations_merged1 = pd.merge(stations_df, temp_df, how='left', on='id_sensor')
@@ -107,7 +100,6 @@ def transformation(config: dict, df: pd.DataFrame) -> pd.DataFrame:
 
     env_varibles_df = env_varibles_df[env_varibles_df['date'].notna()]
 
-    print(env_varibles_df.head())
    
     e.info("TRANSFORMATION: SUBSETTING DONE")    
     e.info("TRANSFORMATION: COMPLETED")

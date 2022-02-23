@@ -1,14 +1,10 @@
 ![tempsnip](https://user-images.githubusercontent.com/99036519/154965295-c1aac7d9-bcbe-4c07-af10-b0ff46810e8c.png)
 
-# INTRODUCTION
+# Introduction
 Air quality monitoring is extremely important in today’s world as it has a direct impact on human health. The monitoring of atmosphere is extremely important as the air quality is an important problem for large communities. The main requirements for analytical devices used for monitoring air quality include a long period of autonomic operation and portability.
            This application is designed based of python repository which aims to help various users access and analytical report of certain environmental variables within the Lisbon municipality. It collects data about HUMDITY, TEMPERATURE and NOISE within a particular time interval, processes it and produce an IDW map of the variable in the form of an analytical report.
-
-
-
-# OBJECTIVES
-
-    This project is aimed at producing a pdf report which will show the behavior of some environmental variables in Lisbon. The pdf reports will contain maps for temperature, precipitation, and noise in Lisbon, based on the data from 80 stations, maps will be generated using IDW as interpolation method, and using points for locating the stations.
+# Objectives
+This project is aimed at producing a pdf report which will show the behavior of some environmental variables in Lisbon. The pdf reports will contain maps for temperature, precipitation, and noise in Lisbon, based on the data from 80 stations, maps will be generated using IDW as interpolation method, and using points for locating the stations.
 The main objective is to use several open-source resources to build a solution aimed at producing a pdf report which will show the behavior of some environmental variables in Lisbon. This is done by performing the following operations:
 * Extract data from online repository from ***Camara de Lisboa*
 * Transform the original data by doing some cleaning and spatial operations in order to get a new perspective of the original data.
@@ -20,44 +16,58 @@ The main objective is to use several open-source resources to build a solution a
 * Create a pdf report with the plots for each environmental variable.
 * Grant users access to retrieve data from the database connection using API.
 * Generate a GUI interface where the user executes the program.
-
 ___________________________________________________________________________________________
-Please continue here:
+# Data /Database 
+The data comes from “camera municipal de Lisboa” “lisboa-aberta” (http://lisboaaberta.cmlisboa.pt/index.php/pt/dados/conjuntos-de-dados) with sensors deployed in 80 locations for monitoring the environmental parameters across Lisbon municipality which were aggregated on a daily basis.The database contains variables populated through the Python code and then stored in a table within a SQL database. The first table contains information about the environmental variables, such as their full name, ID and date. In the same database, there is another table that defines the environmental variables, such as their full name, ID and date as well as the sensor ID freguesia and address, which is the user interface. The database is updated every day by a schedular that runs every six (6) hours initiated by the ETL process.
 
-we'll implement a simple **ETL package**. 
+# System Requirements 
+• Python 3.10.2 or later.
+• Postgress database.
+• User interface.
+certifi==2020.12.5
+chardet==4.0.0
+idna==2.10
+numpy==1.20.0
+pandas==1.2.1
+psycopg2-binary==2.8.6
+python-dateutil==2.8.1
+pytz==2021.1
+PyYAML==5.4.1
+requests==2.25.1
+six==1.15.0
+SQLAlchemy==1.3.23
+urllib3==1.26.3
+geopandas
+rasterio==1.2.10
+contextily==1.2.0
+fpdf==1.7.2
+flask==2.0.3
+flask_sqlalchemy==2.5.1
+ 
 
-ETL stands for Extraction-Transform-Load, and, in practice, means the code we are about to write must:
+# Project Structure
 
-* Extract data from one or many sources. These sources are typically databases, APIs, flat files like CSV, etc;
-* Transform the original data to serve our goals;
-* Load the transformed data into a database (actually not necessarily, but it will in our example). 
+The project has four main elements:
+• **ETL module:** in charge of extracting information from the source, transform and clean data, and the load operation, storaging into postgresql database
+• **Report module:** composed of 2 python scripts which are in charge of retrieving data from the database, perform the geographic operations for interpolation, plotting maps and creating the pdf document.
+• **User Module:** Very small frontend point where users select the dates of their interest to create the report. This module is composed of a python script, html template and css style file.
+• **API Module:** end points where users can get information from the database. The module is composed of one python script ( the same used to create the web page).
 
-An ETL process is, more often than not, started automatically by some sort of job scheduler. In other words, ETL processes are scheduled to run win a predefined frequency (e.g. "every day at 01:30 AM", "At the 20th day of each month at 06:00 AM", etc). These runs extract new data, transform and load it into the database. 
 
-Thus, our code cannot rely on human intervention during the process, but it has to report some how in case of a fatal error.
+ # Running the application
+• The ETL runs automatically, using task scheduller in windows, the task runs a bat file called lisbon.
+• The project's main result is the pdf report, webpage runs locally in http://localhost:5001/, the script which launchs the webpage is **webapp.py**
 
-So, a complete ETL process must:
+**Note:** Users interested in running this project in their machines should clone the repository and install the python packages listed in requeriments.txt
 
-* Perform all extraction, transformation and loading without quering the user; 
-* Report the current state of the process, and in case of error;
-* Be able to deal with the incomming of new data.
+# Output and Visualization.
+Using the Python based end-user data retrieval file, the analytical report is presented on a map in pdf format together with the average values recorded by the various sensors
 
-You can read more about ETL [here](https://en.wikipedia.org/wiki/Extract,_transform,_load).
+![hum map](https://user-images.githubusercontent.com/99036519/155208685-308f501f-bc61-4aef-a4a2-c7212cc85b5d.JPG)
 
-## Data
 
-We'll be using the [NYC taxi dataset](https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page). 
 
-## Questions
 
-1. How many rides took place on each day of January?
-2. What is the average fare amount for rides with only one passenger in the first two weeks?
-3. How many rides of each rate type took place in the month of January?
-4. For each airport, 
-    * How rides there? 
-    * What's the average ride duration? 
-    * What's the average cost? 
-    * What's the average tip? 
-    * What's the min, average and max number of passengers?
-5. How many rides took place every 5 minutes for the first day of 2016?
-6. How many rides on New Year’s morning originated from within 400m of Times Square, in 30 minute buckets?
+
+
+

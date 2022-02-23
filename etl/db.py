@@ -17,8 +17,7 @@ class DBController:
         self.username = username
         self.password = password
         self.uri = f"postgresql+psycopg2://{username}:{password}@{host}:{port}/{database}"
-        #self.uri = f"postgres+psycopg2://{username}:{password}@{host}:{port}/{database}"
-
+        
     def select_data(self, query: str) -> pd.DataFrame:
         """This functions abstracts the `SELECT` queries
 
@@ -30,6 +29,8 @@ class DBController:
         """
         try:
             con = sql.create_engine(self.uri)
+            # As the purpose of the porject is based on dates selection, here was neccesary to personalize the format date
+
             select_df = pd.read_sql(query, con, parse_dates={ "date": {"format": "%Y-%m-%d"}})
         except Exception as e:
             die(f"select_data: {e}")
@@ -60,7 +61,7 @@ class DBController:
             die(f"{e}")
     
     def insert_geodata(self, gdf: gpd.GeoDataFrame, schema: str, table: str) -> None:
-        """This function abstracts the `INSERT` queries
+        """This function abstracts the `INSERT` geojson data into database
 
         Args:
             df (pd.DataFrame): dataframe to be inserted

@@ -1,8 +1,9 @@
 SET search_path TO us;
 
 /*
-    The `originaldata` table records the variables
-    temperature, humidity and noise.
+    The `env_variables` table records the variables
+    temperature, humidity, noise, address of each sensor and the fraguesia where is located each sensor
+    The index on date helps to speed up the query operations
 */
 
 DROP TABLE IF EXISTS env_variables;
