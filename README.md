@@ -51,13 +51,22 @@ Once the data in in the table, there is a Trigger which runs a database function
 
 ![image](https://user-images.githubusercontent.com/38009811/155449985-908aa5b5-db96-4704-b44e-064c153309cb.png)
 
+The ETL module runs automatically every day without user supervision, using the task scheduler tool in windows. The lisbon.bat file has the configuration to run the ETL module
 
+Using a webpage users run the scripts in the backend in charge to create the pdf file with the information about the average values for Temprature, Noise and Humidity in Lisbon.
+the first part has a map with idw interpolation values for the time period selected and the second part is a bar graph with the average for whole lisbon in each day during the time period selected.
+
+![image](https://user-images.githubusercontent.com/38009811/155451369-7db1a8f2-06b8-437a-9212-0fe8d40ecbfe.png)
+
+The process in the backend runs a query to get data from the database, convert that data in a pandas dataframe, then dataframe is merge with geojson file of stations or sensors.
+Using those point features the interpolation operation using IDW method is perfomed and the results go to a temporal folder as tif files. Afterwards a plot from the tif file is created setting the color ramp for legend and countours from the pixel values, those plots are saved as png files.
+The last step is to put the plots in the pdf file and the text which tells to the user what is each image about.
 
  # Running the application
 • The ETL runs automatically, using task scheduller in windows, the task runs a bat file called lisbon.
 • The project's main result is the pdf report, webpage runs locally in http://localhost:5001/, the script which launchs the webpage is **webapp.py**
 
-**Note:** Users interested in running this project in their machines should clone the repository and install the python packages listed in requeriments.txt
+**Note:** Users interested in running this project in their machines can clone the repository or download the zip file repository. Before to run the scripts users will need to install the python packages listed in requeriments.txt
 
 # Output and Visualization.
 Using the Python based end-user data retrieval file, the analytical report is presented on a map in pdf format together with the average values recorded by the various sensors
