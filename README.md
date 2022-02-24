@@ -22,28 +22,10 @@ The data comes from “camera municipal de Lisboa” “lisboa-aberta” (http:/
 
 # System Requirements 
 • Python 3.10.2 or later.
-• Postgress database.
-• User interface.
-certifi==2020.12.5
-chardet==4.0.0
-idna==2.10
-numpy==1.20.0
-pandas==1.2.1
-psycopg2-binary==2.8.6
-python-dateutil==2.8.1
-pytz==2021.1
-PyYAML==5.4.1
-requests==2.25.1
-six==1.15.0
-SQLAlchemy==1.3.23
-urllib3==1.26.3
-geopandas
-rasterio==1.2.10
-contextily==1.2.0
-fpdf==1.7.2
-flask==2.0.3
-flask_sqlalchemy==2.5.1
- 
+• Postgres database.
+• Text editor or ide for coding recommended VisualStudio Code.
+• python packages listed in the requirements.txt file
+
 
 # Project Structure
 
@@ -52,6 +34,23 @@ The project has four main elements:
 • **Report module:** composed of 2 python scripts which are in charge of retrieving data from the database, perform the geographic operations for interpolation, plotting maps and creating the pdf document.
 • **User Module:** Very small frontend point where users select the dates of their interest to create the report. This module is composed of a python script, html template and css style file.
 • **API Module:** end points where users can get information from the database. The module is composed of one python script ( the same used to create the web page).
+
+# Workflow Explanation
+
+The data comes from the **CAMERA DE LISBOA**, they have in their website values that monitor the envoronment in Lisbon city. They have almost 80 sensors across the city.
+
+![image](https://user-images.githubusercontent.com/38009811/155448892-0ef72785-3505-460a-8128-0f76debf86a7.png)
+
+The have a url endpoint where community can access to the almost real time data its updated each hour.
+
+![image](https://user-images.githubusercontent.com/38009811/155449369-8db96a01-2ff5-4102-bce8-daa491a310a4.png)
+
+Using the ETL module we storage information that we extract from that url in a table in a postgres database.
+
+Once the data in in the table, there is a Trigger which runs a database function that performs a spatial intersection in order capture the Fragesia's name and station's address from two spatial tables in the same database.
+
+![image](https://user-images.githubusercontent.com/38009811/155449985-908aa5b5-db96-4704-b44e-064c153309cb.png)
+
 
 
  # Running the application
