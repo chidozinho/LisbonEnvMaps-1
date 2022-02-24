@@ -8,10 +8,16 @@
         </title>
     </head>
     <body>
+
+        <div class="container">
+            <img src="{{ url_for('static',filename='banner.png') }}" alt="Snow" style="width:100%;">
+            <div class="centered">
+                <h2>
+                    Fill the dates for Lisbon Environment Report
+                </h2></div>
+        </div>
         <div class="content">
-        <h2>
-            Fill the dates for Lisbon Environment Report
-        </h2>
+        
         <p>
             <center>
                 <form action="/getreport" method="post">
@@ -24,13 +30,5 @@
             </center>
         </p>    
     </div>   
-</canvas>   
-<script>
-var n = document.getElementById("Image")
-var c = document.getElementById("myCanvas");
-var ctx = c.getContext("2d");
-ctx.font = "30px Arial";
-ctx.fillText(n, 20, 50);
-</script>        
-    </body>
+   </body>
 </html>
